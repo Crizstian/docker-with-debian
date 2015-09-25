@@ -1,4 +1,4 @@
-# docker-with-debian
+# Docker with Debian 8.2
 
 This code was created to configure a debian 8.2 server, this server will deploy a web docker container and a docker database container
 
