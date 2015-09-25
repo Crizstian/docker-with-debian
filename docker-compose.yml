@@ -1,0 +1,50 @@
+eco_db:
+ image: mysql
+ volumes_from:
+  - db_data
+  - respaldo
+ ports:
+  - 3306:3306
+ environment:
+  - MYSQL_ROOT_PASSWORD=ecosistemas
+  - MYSQL_PORT_3306_TCP=3306
+ hostname: eco_db
+ restart: on-failure
+ stdin_open: true
+ tty: true
+ labels:
+  eco_db.description: "Servidor de Base de datos de Red Mex-LTER"
+  eco_db.department: "Centro de Investigaciones en Ecosistemas - UNAM. Morelia, Michoacán México"
+  eco_db.mantainer: "Cristian Ramirez Rosas cristiano.rosetti@gmail.com"
+  eco_db.architecture: "Debian 8.2 amd64"
+  eco_db.release-date: "2015-9-14"
+  eco_db.version: "0.0.2-beta"
+  eco_db.environment: "testing"
+  eco_db.storage: "docker volumes db_data"
+
+eco_web:
+ build: /home/ecosistemas/Docker
+ links:
+  - eco_db
+ ports:
+  - 8080:80
+ working_dir: /var/www/html
+ volumes_from:
+  - web_data
+  - respaldo
+ hostname: eco_web
+ domainname: mexlter.org.mx
+ environment:
+  - VIRTUAL_HOST=mexlter.org.mx
+ restart: on-failure
+ stdin_open: true
+ tty: true
+ labels:
+  mx.org.mexlter.description: "Servidor Web de Red Mex-LTER"
+  mx.org.mexlter.department: "Centro de Investigaciones en Ecosistemas - UNAM. Morelia, Michoacán México"
+  mx.org.mexlter.mantainer: "Cristian Ramirez Rosas cristiano.rosetti@gmail.com"
+  mx.org.mexlter.architecture: "Debian 8.2 amd64"
+  mx.org.mexlter.release-date: "2015-9-14"
+  mx.org.mexlter.version: "0.0.2-beta"
+  mx.org.mexlter.environment: "testing"
+  mx.org.mexlter.storage: "docker volumes web_data"
